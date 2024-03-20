@@ -7,7 +7,7 @@
 ### 2024-03-13 herryzhou
 ##########################################################
 # 环境参数获取
-. ./GetEnvironmentVariables.sh
+. GetEnvironmentVariables.sh
   
 
 # 命名空间  
