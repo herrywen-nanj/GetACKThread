@@ -24,14 +24,14 @@ WORKPLACE="$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
  
 
 # OSS远程存储路径
-OSS_PATH="oss://hxl-erp-dev/jvm-dump/"
+OSS_PATH="oss://xxxxxx/jvm-dump/"
 
 
  
 for POD in $PODS; do  
 	# 查询pod是否就绪,限制条件只适合pod内只有一个容器
 	STATUS_PHASE=$(kubectl  --kubeconfig  $kubeconfig get pods  -o=jsonpath="{.items[?(@.metadata.name == '$POD')].status.phase}")
-	STATUS_READY==$(kubectl  --kubeconfig  $kubeconfig get pods -o=jsonpath="{.items[?(@.metadata.name == '$POD')].status.containerStatuses}"| sed "s/[][]//g" | jq ".ready")
+	STATUS_READY=$(kubectl  --kubeconfig  $kubeconfig get pods -o=jsonpath="{.items[?(@.metadata.name == '$POD')].status.containerStatuses}"| sed "s/[][]//g" | jq ".ready")
 	if [[ $STATUS_PHASE == "Running" ]] && [[ $STATUS_READY == "true" ]];then 
 		# 从 Prometheus 查询 Pod 的 CPU 使用率  
 		CPU_USAGE=`curl  -H "Authorization: Bearer $TOKEN" -s  "$PROMETHEUS_URL/api/v1/query_range?query=sum(irate(container_cpu_usage_seconds_total\{pod=~\"$POD\",namespace=\"$NAMESPACE\"\}\[1m\]))by(pod)&start=$(date -d '1 minute ago' +%s)&end=$(date +%s)&step=10"| jq -r '.data.result[].values[-1][1]'`
