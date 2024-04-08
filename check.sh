@@ -19,8 +19,8 @@ Check_Times_Counter() {
   Define_Default_Check_Times
   flag=1
   echo "#######正在检查CPU大于90%的记录，默认检查5次##############"
-	while [ "$flag" -le "$check_times"]
-	do
-		    let "flag++"
-	done
+  while [ "$flag" -le "$check_times"]
+  do
+        let "flag++"
+  done
 }
