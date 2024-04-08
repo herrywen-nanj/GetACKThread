@@ -44,7 +44,7 @@ for POD in $PODS; do
 		  
 		# 检查 CPU 使用率是否超过阈值,需要提前设置ACK中应用的StartupProbe探针的initialDelaySeconds参数为3m即设置180s，启动完成程序会占用较高CPU，运行大概3m会趋近正常  
 		if [[ "$CPU_USAGE_PERCENT" -gt "$THRESHOLD" ]]; then
-		  Check_Times_Counter
+		Check_Times_Counter
 			echo "$(date +"%Y-%m-%d-%H:%M")    Pod $POD CPU使用率为$CPU_USAGE_PERCENT超过 $THRESHOLD%，正在重启 Pod"   >> $(date +%F)_delete_pod.txt
 			kubectl  --kubeconfig  $kubeconfig exec -it $POD -- sh<dump_jvm.sh > /dev/null 2>&1
 			if [[ $? -eq 0 ]]; then
