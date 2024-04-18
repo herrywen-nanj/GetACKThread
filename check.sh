@@ -29,7 +29,7 @@ Check_Times_Counter_Controller() {
 	CPU_USAGE_PERCENT=`echo "${CPU_USAGE} *1000*100*100/$CPU_USAGE_TOTAL" |bc `
 # 检查 CPU 使用率是否超过阈值,需要提前设置ACK中应用的StartupProbe探针的initialDelaySeconds参数为3m即设置180s，启动完成程序会占用较高CPU，运行大概3m会趋近正常  
 	if [[ "$CPU_USAGE_PERCENT" -gt "$THRESHOLD" ]]; then
-			let "flag++"
+ 		let "flag++"
 	fi
   done
 }
